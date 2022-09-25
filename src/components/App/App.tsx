@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
+import { CheckCocks } from '../CheckCocks/CheckCocks';
 import './App.css';
 
-import { Tick } from './Tick/Tick';
 
 function App() {
   return (
-    <Tick size={300}></Tick>
+    <CheckCocks></CheckCocks>
   );
 }
 
