@@ -12,6 +12,9 @@ import fullScreenIcon from "./images/full-screen.svg";
 import closeIcon from "./images/cross.svg";
 
 import "./TopBar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getPage } from "../../store/pageSlice/selectors";
+import { changePage } from "../../store/pageSlice/slice";
 // import { ipcRenderer } from "electron/renderer";
 
 const cls = cn("top-bar");
@@ -21,6 +24,9 @@ const ipc = window.require("electron").ipcRenderer;
 interface TopBarProps extends CnProps {}
 
 export const TopBar: FC<TopBarProps> = ({ className }) => {
+  const { currentPage } = useSelector(getPage);
+  const dispatch = useDispatch();
+
   const close = useCallback((e: MouseEvent) => {
     e.preventDefault();
     ipc.send("closeApp");
@@ -36,23 +42,46 @@ export const TopBar: FC<TopBarProps> = ({ className }) => {
     ipc.send("maximizeApp");
   }, []);
 
+  const changeToSorter = useCallback(
+    () => dispatch(changePage("sorter")),
+    [dispatch]
+  );
+  const changeToDuplicate = useCallback(
+    () => dispatch(changePage("duplicate")),
+    [dispatch]
+  );
+
   return (
     <div className={cls()}>
       <div className={cls("left-side")}>
         <div className={cls("icon", { type: "app" })}>
           <img src={appIcon} />
         </div>
-        <div className={cls("icon")}>
+        <div
+          className={cls("icon", {
+            active: currentPage === "sorter",
+            type: "page-select",
+          })}
+          onClick={changeToSorter}
+        >
           <img src={sortIcon} />
         </div>
-        <div className={cls("icon")}>
+        <div
+          className={cls("icon", {
+            active: currentPage === "duplicate",
+            type: "page-select",
+          })}
+          onClick={changeToDuplicate}
+        >
           <img src={compareIcon} />
         </div>
         <div className={cls("icon")}>
           <img src={settingsIcon} />
         </div>
       </div>
-      <div className={cls('draggable')}></div>
+      <div
+        className={cls("draggable")}
+      >{`ImageOrganizer - ${currentPage}`}</div>
       <div className={cls("right-side")}>
         <div className={cls("icon")} onClick={minimize}>
           <img src={minimizeIcon} />

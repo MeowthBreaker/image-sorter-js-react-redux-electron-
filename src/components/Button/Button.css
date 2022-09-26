@@ -1,0 +1,16 @@
+.button {
+  padding: 10px 30px;
+
+  width: fit-content;
+  height: fit-content;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  white-space: nowrap;
+
+  background-color: var(--secondary-bg-color);
+  box-shadow: 1px 1px rgba(var(--primary-text-color), 0.8);
+}

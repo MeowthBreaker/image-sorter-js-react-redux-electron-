@@ -3,7 +3,9 @@
   --image-size: 20px;
 
   width: 100vw;
-  height: 40px;
+  height: var(--top-bar-height);
+
+  position: fixed;
 
   display: flex;
   flex-direction: row;
@@ -21,6 +23,16 @@
   height: 100%;
   flex-grow: 1;
   -webkit-app-region: drag;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  white-space: nowrap;
+  text-transform: capitalize;
+
+  color: var(--primary-inverted-text-color);
 }
 
 .top-bar__icon {
@@ -36,6 +48,15 @@
   padding: 0 5px;
 
   height: 100%;
+}
+
+.top-bar__icon_type_page-select {
+  border-top-left-radius: 25%;
+  border-top-right-radius: 25%;
+}
+
+.top-bar__icon_active {
+  background-color: #333333;
 }
 
 .top-bar__icon:not(.top-bar__icon_type_app):hover {
