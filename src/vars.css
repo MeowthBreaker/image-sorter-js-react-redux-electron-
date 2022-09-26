@@ -1,0 +1,10 @@
+.theme_type_light {
+  --primary-text-color: rgb(0, 0, 0);
+  --secondary-text-color: rgb(61, 61, 61);
+
+  --primary-bg-color: rgb(255, 255, 255);
+  --secondary-bg-color: rgb(215, 215, 215);
+
+  --top-bar-bg-color: #000;
+  --icon-hover-bg-color: rgb(65, 62, 218);
+}

@@ -1,3 +1,74 @@
 .top-bar {
+  --icon-size: 25px;
+  --image-size: 20px;
 
-};
+  width: 100vw;
+  height: 40px;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: var(--top-bar-bg-color);
+
+  padding: 3px 3px 0px 3px;
+  box-sizing: border-box;
+}
+
+.top-bar__draggable {
+  height: 100%;
+  flex-grow: 1;
+  -webkit-app-region: drag;
+}
+
+.top-bar__icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all linear 0.2s;
+
+  padding: 0 5px;
+
+  height: 100%;
+}
+
+.top-bar__icon:not(.top-bar__icon_type_app):hover {
+  background-color: var(--icon-hover-bg-color);
+}
+
+.top-bar__icon:not(.top-bar__icon_type_app) > img {
+  filter: invert(1);
+}
+
+.top-bar__icon > img {
+  width: var(--image-size);
+  height: var(--image-size);
+}
+
+.top-bar__icon_type_app {
+  --icon-size: 35px;
+}
+
+.top-bar__icon_type_app > img {
+  --image-size: 30px;
+}
+
+.top-bar__left-side,
+.top-bar__right-side {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  height: 100%;
+}
+
+.top-bar__left-side > div:not(:last-child),
+.top-bar__right-side > div:not(:last-child) {
+  margin-right: 5px;
+}

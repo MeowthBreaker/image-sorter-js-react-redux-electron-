@@ -1,0 +1,25 @@
+.sorter {
+  height: calc(100vh - 40px);
+  width: 100vw;
+}
+
+.sorter__bar {
+  width: 100vw;
+  height: 40px;
+  padding: 0 5px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sorter__bar-buttons {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.sorter__bar-buttons > div {
+  margin-right: 5px;
+}
