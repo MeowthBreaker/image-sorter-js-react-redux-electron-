@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow } from "electron";
 import * as path from "path";
 import * as isDev from "electron-is-dev";
 import installExtension, {
@@ -7,7 +7,8 @@ import installExtension, {
 } from "electron-devtools-installer";
 
 let win: BrowserWindow | null = null;
-const ipc = ipcMain;
+
+require("@electron/remote/main").initialize();
 
 function createWindow() {
   win = new BrowserWindow({
@@ -28,14 +29,6 @@ function createWindow() {
     // 'build/index.html'
     win.loadURL(`file://${__dirname}/../index.html`);
   }
-
-  ipc.on("closeApp", () => win?.close());
-
-  ipc.on("minimizeApp", () => win?.minimize());
-
-  ipc.on("maximizeApp", () =>
-    win?.isMaximized() ? win?.unmaximize() : win?.maximize()
-  );
 
   win.on("closed", () => (win = null));
 
@@ -78,4 +71,8 @@ app.on("activate", () => {
   if (win === null) {
     createWindow();
   }
+});
+
+app.on("browser-window-created", (_, window) => {
+  require("@electron/remote/main").enable(window.webContents);
 });

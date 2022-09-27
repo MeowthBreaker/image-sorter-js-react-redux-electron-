@@ -3,16 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SettingsState } from "./types";
 
 const initialSettings: SettingsState = {
-  sorterSettings: {
+  sorter: {
     searchMethod: "deep",
     skipAction: "delete",
-  },
-  duplicateSettings: {
-    compareGIFS: true,
     allowedTypes: ["jpg", "png"],
-  },
-  hotkeysSettings: {
-    sorter: {
+    hotkeys: {
       skip: "Space",
       delete: "Delete",
       toggleFileBar: "F1",
@@ -20,7 +15,12 @@ const initialSettings: SettingsState = {
       loadProfile: "F9",
       saveProfile: "F5",
     },
-    duplicate: {
+  },
+  duplicate: {
+    searchMethod: "deep",
+    compareGIFS: true,
+    allowedTypes: ["jpg", "png"],
+    hotkeys: {
       deleteLeft: "Numpad1",
       deleteRight: "Numpad3",
       deleteBoth: "Numpad2",
@@ -35,8 +35,7 @@ export const settingsSlice = createSlice({
   initialState: initialSettings,
   reducers: {
     toggleCompareGIFS: (state) => {
-      state.duplicateSettings.compareGIFS =
-        !state.duplicateSettings.compareGIFS;
+      state.duplicate.compareGIFS = !state.duplicate.compareGIFS;
     },
   },
 });

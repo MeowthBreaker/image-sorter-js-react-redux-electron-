@@ -1,12 +1,9 @@
-export interface SorterSettings {
+import { PageType } from "../pageSlice/types";
+
+type AllowedImageTypes = "jpg" | "jpeg" | "png";
+
+export interface BaseSettings {
   searchMethod: "on top" | "deep";
-  skipAction: "delete" | "folder";
-}
-
-type AllowedImageTypes = "jpg" | "png";
-
-export interface DuplicateSettings {
-  compareGIFS: boolean;
   allowedTypes: AllowedImageTypes[];
 }
 
@@ -27,13 +24,17 @@ export interface DuplicateHotKeys {
   cancel: string;
 }
 
-export interface HotKeySettings {
-  sorter: SorterHotkeys;
-  duplicate: DuplicateHotKeys;
+export interface SorterSettings extends BaseSettings {
+  skipAction: "delete" | "folder";
+  hotkeys: SorterHotkeys;
 }
 
-export interface SettingsState {
-  sorterSettings: SorterSettings;
-  duplicateSettings: DuplicateSettings;
-  hotkeysSettings: HotKeySettings;
+export interface DuplicateSettings extends BaseSettings {
+  compareGIFS: boolean;
+  hotkeys: DuplicateHotKeys;
+}
+
+export interface SettingsState extends Record<PageType, BaseSettings> {
+  sorter: SorterSettings;
+  duplicate: DuplicateSettings;
 }

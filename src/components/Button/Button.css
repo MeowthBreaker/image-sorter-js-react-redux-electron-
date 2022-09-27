@@ -13,4 +13,7 @@
 
   background-color: var(--secondary-bg-color);
   box-shadow: 1px 1px rgba(var(--primary-text-color), 0.8);
+  border: 1px var(--primary-text-color) solid;
+
+  cursor: pointer;
 }

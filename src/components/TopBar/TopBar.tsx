@@ -1,7 +1,6 @@
 import React, { FC, useCallback, MouseEvent } from "react";
-// import { ipcRenderer } from "electron";
-
 import { cn, CnProps } from "../../utils/cn";
+import { getCurrentWindow } from "@electron/remote";
 
 import appIcon from "./images/BugAngry.jpg";
 import sortIcon from "./images/sort.svg";
@@ -11,15 +10,15 @@ import minimizeIcon from "./images/minimize.svg";
 import fullScreenIcon from "./images/full-screen.svg";
 import closeIcon from "./images/cross.svg";
 
-import "./TopBar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getPage } from "../../store/pageSlice/selectors";
 import { changePage } from "../../store/pageSlice/slice";
-// import { ipcRenderer } from "electron/renderer";
+
+import "./TopBar.css";
 
 const cls = cn("top-bar");
 
-const ipc = window.require("electron").ipcRenderer;
+const win = getCurrentWindow();
 
 interface TopBarProps extends CnProps {}
 
@@ -29,17 +28,17 @@ export const TopBar: FC<TopBarProps> = ({ className }) => {
 
   const close = useCallback((e: MouseEvent) => {
     e.preventDefault();
-    ipc.send("closeApp");
+    win.close();
   }, []);
 
   const minimize = useCallback((e: MouseEvent) => {
     e.preventDefault();
-    ipc.send("minimizeApp");
+    win.minimize();
   }, []);
 
   const maximize = useCallback((e: MouseEvent) => {
     e.preventDefault();
-    ipc.send("maximizeApp");
+    win?.isMaximized() ? win?.unmaximize() : win?.maximize();
   }, []);
 
   const changeToSorter = useCallback(

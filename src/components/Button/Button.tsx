@@ -1,18 +1,18 @@
-import React, { FC, ReactNode } from 'react';
-import { cn, CnProps } from '../../utils/cn';
+import React, { FC, ReactNode, HTMLAttributes } from "react";
+import { cn, CnProps } from "../../utils/cn";
 
 import "./Button.css";
 
-const cls = cn('button');
+const cls = cn("button");
 
-interface ButtonProps extends CnProps {
+interface ButtonProps extends CnProps, HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   className?: string;
-};
+}
 
-export const Button: FC<ButtonProps> = ({children, className}) => {
+export const Button: FC<ButtonProps> = ({ children, className, ...props }) => {
   return (
-    <div className={cls(null, [className])}>
+    <div {...props} className={cls(null, [className])}>
       {children}
     </div>
   );

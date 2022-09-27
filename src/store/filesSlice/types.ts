@@ -12,10 +12,11 @@ export interface File {
 
 export interface FilesData {
   files: File[];
-};
+  processFiles: number;
+  overallFiles: number;
+  currentFolder?: string | null;
+}
 
 export type FilesDataType = PageType;
 
 export type FilesState = Record<FilesDataType, FilesData>;
-
-
