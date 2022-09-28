@@ -2,6 +2,8 @@ import React, { FC, useCallback, MouseEvent } from "react";
 import { cn, CnProps } from "../../utils/cn";
 import { getCurrentWindow } from "@electron/remote";
 
+import { Icon } from "components/Icon/Icon";
+
 import appIcon from "./images/BugAngry.jpg";
 import sortIcon from "./images/sort.svg";
 import compareIcon from "./images/compare.svg";
@@ -53,44 +55,60 @@ export const TopBar: FC<TopBarProps> = ({ className }) => {
   return (
     <div className={cls()}>
       <div className={cls("left-side")}>
-        <div className={cls("icon", { type: "app" })}>
-          <img src={appIcon} />
-        </div>
-        <div
-          className={cls("icon", {
-            active: currentPage === "sorter",
-            type: "page-select",
-          })}
+        <Icon
+          className={cls("icon-app")}
+          src={appIcon}
+          hoverable={false}
+          inverted={false}
+        />
+        <Icon
+          className={cls("icon")}
           onClick={changeToSorter}
-        >
-          <img src={sortIcon} />
-        </div>
-        <div
+          src={sortIcon}
+          active={currentPage === "sorter"}
+          borderRadius="bookmark"
+          color="dark"
+        />
+        <Icon
           className={cls("icon", {
             active: currentPage === "duplicate",
             type: "page-select",
           })}
           onClick={changeToDuplicate}
-        >
-          <img src={compareIcon} />
-        </div>
-        <div className={cls("icon")}>
-          <img src={settingsIcon} />
-        </div>
+          src={compareIcon}
+          active={currentPage === "duplicate"}
+          borderRadius="bookmark"
+          color="dark"
+        />
+        <Icon
+          className={cls("icon")}
+          src={settingsIcon}
+          color="dark"
+          borderRadius="oval"
+        />
       </div>
       <div
         className={cls("draggable")}
       >{`ImageOrganizer - ${currentPage}`}</div>
       <div className={cls("right-side")}>
-        <div className={cls("icon")} onClick={minimize}>
-          <img src={minimizeIcon} />
-        </div>
-        <div className={cls("icon")} onClick={maximize}>
-          <img src={fullScreenIcon} />
-        </div>
-        <div className={cls("icon")} onClick={close}>
-          <img src={closeIcon} />
-        </div>
+        <Icon
+          className={cls("icon")}
+          onClick={minimize}
+          src={minimizeIcon}
+          color="dark"
+        />
+        <Icon
+          className={cls("icon")}
+          onClick={maximize}
+          src={fullScreenIcon}
+          color="dark"
+        />
+        <Icon
+          className={cls("icon")}
+          onClick={close}
+          src={closeIcon}
+          color="dark"
+        />
       </div>
     </div>
   );

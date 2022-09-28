@@ -1,30 +1,29 @@
-import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSorter } from "../../store/sorterSlice/selectors";
-import { setModalActive } from "../../store/sorterSlice/slice";
+import React, { useCallback } from "react";
 import { cn } from "../../utils/cn";
-import * as electron from "electron";
-import { getCurrentWindow, dialog } from "@electron/remote";
-import * as fs from "fs";
-import { Oval } from "react-loader-spinner";
+import { dialog } from "@electron/remote";
 
+import { Oval } from "react-loader-spinner";
 import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
+import { Icon } from "components/Icon/Icon";
+import { LocalImage } from "components/LocalImage/LocalImage";
+import info from "./images/info.svg";
+
+import { getSorter } from "../../store/sorterSlice/selectors";
+import { clearStorage, setCurrentFolder } from "../../store/filesSlice/slice";
+import { setFilesInStorage } from "../../store/filesSlice/thunks/setFilesInStorage";
+import { LoadingStatus } from "store/sorterSlice/types";
+import { getFiles } from "store/filesSlice/selectors";
 
 import "./Sorter.css";
-import { setCurrentFolder } from "../../store/filesSlice/slice";
-import { setFilesInStorage } from "../../store/sorterSlice/thunks/setFilesInStorage";
 
 const cls = cn("sorter");
 
 export const Sorter = () => {
   const sorterState = useSelector(getSorter);
+  const filesState = useSelector(getFiles);
   const dispatch = useDispatch();
-
-  const closeModal = useCallback(
-    () => dispatch(setModalActive(false)),
-    [dispatch]
-  );
 
   const setFolder = useCallback(() => {
     dialog
@@ -37,7 +36,7 @@ export const Sorter = () => {
               selectedFolder: result.filePaths[0],
             })
           );
-          // dispatch(setModalActive(true));
+          dispatch(clearStorage({ id: "sorter" }));
           // @ts-ignore
           dispatch(setFilesInStorage());
         }
@@ -47,11 +46,11 @@ export const Sorter = () => {
 
   return (
     <div className={cls()}>
-      {sorterState.sorterModal.isModalActive && (
+      {sorterState.status === ("loading" as LoadingStatus) && (
         <Modal>
-          <div className={cls("modal-buttons")}>
-            <Button>Start</Button>
-            <Button>Stop</Button>
+          <Oval height={250} width={250} color="blue" secondaryColor="white" />
+          <div className={cls("progress")}>
+            {filesState.processedFiles}/{filesState.overallFiles}
           </div>
         </Modal>
       )}
@@ -63,8 +62,20 @@ export const Sorter = () => {
           <Button className={cls("load-profile")}>Load Profile</Button>
           <Button className={cls("save-profile")}>Save Folder</Button>
         </div>
-        <div className={cls("info-button")}></div>
+        <Icon
+          src={info}
+          className={cls("info-button")}
+          color="light"
+          borderRadius="oval"
+        />
       </div>
+      <div className={cls("image-container")}>
+        {sorterState.files.length > 0 && <LocalImage
+          path={sorterState.files[sorterState.files.length - 1].path}
+          className={cls("image")}
+        />}
+      </div>
+      <div className={cls("directories-container")}></div>
     </div>
   );
 };

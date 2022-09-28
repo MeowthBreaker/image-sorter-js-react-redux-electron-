@@ -2,7 +2,7 @@ import { PageType } from "../pageSlice/types";
 
 export type FileType = "jpg" | "jpeg" | "png" | "webp" | "gif";
 
-export interface File {
+export interface FileMeta {
   name: string;
   extension: FileType;
   path: string;
@@ -11,8 +11,8 @@ export interface File {
 }
 
 export interface FilesData {
-  files: File[];
-  processFiles: number;
+  files: FileMeta[];
+  processedFiles: number;
   overallFiles: number;
   currentFolder?: string | null;
 }

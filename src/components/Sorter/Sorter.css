@@ -5,8 +5,9 @@
 
 .sorter__bar {
   width: 100vw;
-  height: 40px;
-  padding: 0 5px;
+  height: 5%;
+  min-height: 40px;
+  padding: 5px 5px;
 
   display: flex;
   flex-direction: row;
@@ -22,5 +23,38 @@
 }
 
 .sorter__bar-buttons > div {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.sorter__bar-buttons > div:not(:last-child) {
   margin-right: 5px;
+}
+
+.sorter__progress {
+  display: flex;
+  flex-direction: row;
+}
+
+.sorter__image-container {
+  height: 65%;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+.sorter__image {
+  height: 100%;
+}
+
+.sorter__directories-container {
+  height: 30%;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
 }

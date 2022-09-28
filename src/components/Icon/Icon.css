@@ -1,0 +1,71 @@
+.icon {
+  --icon-size: 25px;
+  --image-size: 20px;
+
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all linear 0.2s;
+
+  padding: 5px 5px;
+
+  cursor: pointer;
+}
+
+.icon__image {
+  width: var(--image-size);
+  height: var(--image-size);
+}
+
+/* dark theme */
+.icon_color_dark {
+  background-color: var(--top-bar-bg-color);
+}
+
+.icon_color_dark.icon_active {
+  background-color: var(--top-bar-bg-active-color);
+}
+/*  */
+
+/* light theme */
+.icon_color_light {
+  background-color: var(--secondary-bg-color);
+  box-shadow: 0 0 1px 1px var(--primary-border-color);
+}
+
+.icon_color_light.icon_active {
+  background-color: var(--secondary-bg-color);
+}
+/*  */
+
+/* icon borderRadius */
+.icon_border_bookmark {
+  border-top-left-radius: 25%;
+  border-top-right-radius: 25%;
+}
+
+.icon_border_oval {
+  border-radius: 25%;
+}
+
+.icon_border_drop {
+  border-bottom-left-radius: 25%;
+  border-bottom-right-radius: 25%;
+}
+/*  */
+
+/* icon inverted */
+.icon_inverted > img {
+  filter: invert(1);
+}
+/*  */
+
+/* icon hoverable */
+.icon_color_dark.icon_hoverable:hover {
+  background-color: var(--icon-hover-bg-color);
+}
+/*  */
