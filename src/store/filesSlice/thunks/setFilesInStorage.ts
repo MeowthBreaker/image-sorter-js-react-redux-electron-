@@ -25,7 +25,7 @@ export const setFilesInStorage = createAsyncThunk<
   void,
   void,
   { state: RootState }
->("sorter/setFilesInStorage", async (__: any, { getState, dispatch }) => {
+>("files/setFilesInStorage", async (__: any, { getState, dispatch }) => {
   const state = getState();
   const currentPage = getCurrentPage(state);
 
@@ -57,7 +57,8 @@ export const setFilesInStorage = createAsyncThunk<
               file: {
                 name: imageName,
                 extension: imageData!.type as FileType,
-                path: file,
+                originalPath: file,
+                movedPath: null,
                 width: imageData!.width + "px",
                 height: imageData!.height + "px",
               },

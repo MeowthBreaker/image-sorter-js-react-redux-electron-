@@ -1,6 +1,9 @@
 .sorter {
   height: 100%;
   width: 100%;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .sorter__bar {
@@ -15,6 +18,8 @@
   align-items: center;
 
   box-sizing: border-box;
+
+  background-color: var(--primary-bg-color);
 }
 
 .sorter__bar-buttons {
@@ -45,6 +50,8 @@
   justify-content: center;
 
   box-sizing: border-box;
+
+  background-color: var(--image-bg-color);
 }
 
 .sorter__image {

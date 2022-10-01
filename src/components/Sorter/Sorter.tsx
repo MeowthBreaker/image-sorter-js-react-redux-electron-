@@ -17,18 +17,22 @@ import { LoadingStatus } from "store/sorterSlice/types";
 import { getFiles } from "store/filesSlice/selectors";
 
 import "./Sorter.css";
+import { setCurrentFile } from "store/sorterSlice/slice";
+import { moveFile } from "store/sorterSlice/thunks/moveFile";
+import { useAppDispatch } from "store/hooks";
+import { retrieveFile } from "store/sorterSlice/thunks/retrieveFile";
 
 const cls = cn("sorter");
 
 export const Sorter = () => {
   const sorterState = useSelector(getSorter);
   const filesState = useSelector(getFiles);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const setFolder = useCallback(() => {
+  const setFolder = useCallback(async () => {
     dialog
       .showOpenDialog({ properties: ["openDirectory"] })
-      .then((result) => {
+      .then(async (result) => {
         if (result.filePaths.length) {
           dispatch(
             setCurrentFolder({
@@ -37,12 +41,32 @@ export const Sorter = () => {
             })
           );
           dispatch(clearStorage({ id: "sorter" }));
-          // @ts-ignore
-          dispatch(setFilesInStorage());
+
+          await dispatch(setFilesInStorage());
+          dispatch(setCurrentFile());
         }
       })
       .catch(console.error);
   }, [dispatch]);
+
+  const onMoveFile = useCallback(async () => {
+    await dispatch(
+      moveFile({
+        from: sorterState.currentFile!.originalPath,
+        to: `C:/Users/Bugama/Desktop/meow/${sorterState.currentFile!.originalPath.slice(
+          sorterState.currentFile!.originalPath.lastIndexOf("/") + 1
+        )}`,
+      })
+    );
+    dispatch(setCurrentFile());
+  }, [dispatch, sorterState]);
+
+  const onRetrieveFile = useCallback(async () => {
+    if (sorterState.movedFiles.length === 0) return;
+
+    await dispatch(retrieveFile());
+    dispatch(setCurrentFile());
+  }, [dispatch, sorterState]);
 
   return (
     <div className={cls()}>
@@ -61,6 +85,8 @@ export const Sorter = () => {
           </Button>
           <Button className={cls("load-profile")}>Load Profile</Button>
           <Button className={cls("save-profile")}>Save Folder</Button>
+          <Button onClick={onMoveFile}>Move</Button>
+          <Button onClick={onRetrieveFile}>Retrieve</Button>
         </div>
         <Icon
           src={info}
@@ -70,10 +96,12 @@ export const Sorter = () => {
         />
       </div>
       <div className={cls("image-container")}>
-        {sorterState.files.length > 0 && <LocalImage
-          path={sorterState.files[sorterState.files.length - 1].path}
-          className={cls("image")}
-        />}
+        {sorterState.currentFile && (
+          <LocalImage
+            path={sorterState.currentFile?.originalPath}
+            className={cls("image")}
+          />
+        )}
       </div>
       <div className={cls("directories-container")}></div>
     </div>

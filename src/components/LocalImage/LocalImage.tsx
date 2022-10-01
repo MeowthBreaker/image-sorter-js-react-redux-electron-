@@ -13,7 +13,7 @@ export const LocalImage: FC<LocalImageProps> = ({ path, className }) => {
     readFile(path).then((buffer) => {
       setSrc(URL.createObjectURL(new File([buffer], path)));
     });
-  }, []);
+  }, [path]);
 
-  return src ? <img src={src} /> : null;
+  return src ? <img src={src} /> : <img alt='meow'/>;
 };

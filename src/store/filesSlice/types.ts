@@ -5,7 +5,8 @@ export type FileType = "jpg" | "jpeg" | "png" | "webp" | "gif";
 export interface FileMeta {
   name: string;
   extension: FileType;
-  path: string;
+  originalPath: string;
+  movedPath: string | null;
   width: string;
   height: string;
 }
