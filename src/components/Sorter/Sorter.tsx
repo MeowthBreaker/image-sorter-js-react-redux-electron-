@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { cn } from "../../utils/cn";
 import { dialog } from "@electron/remote";
 
@@ -8,6 +8,7 @@ import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
 import { Icon } from "components/Icon/Icon";
 import { LocalImage } from "components/LocalImage/LocalImage";
+import { InfoTab } from "components/InfoTab/InfoTab";
 import info from "./images/info.svg";
 
 import { getSorter } from "../../store/sorterSlice/selectors";
@@ -28,6 +29,8 @@ export const Sorter = () => {
   const sorterState = useSelector(getSorter);
   const filesState = useSelector(getFiles);
   const dispatch = useAppDispatch();
+
+  const [infoTabState, setInfoTabState] = useState(false);
 
   const setFolder = useCallback(async () => {
     dialog
@@ -70,6 +73,7 @@ export const Sorter = () => {
 
   return (
     <div className={cls()}>
+      <InfoTab active={infoTabState} />
       {sorterState.status === ("loading" as LoadingStatus) && (
         <Modal>
           <Oval height={250} width={250} color="blue" secondaryColor="white" />
@@ -93,14 +97,12 @@ export const Sorter = () => {
           className={cls("info-button")}
           color="light"
           borderRadius="oval"
+          onClick={() => setInfoTabState(!infoTabState)}
         />
       </div>
       <div className={cls("image-container")}>
         {sorterState.currentFile && (
-          <LocalImage
-            path={sorterState.currentFile?.originalPath}
-            className={cls("image")}
-          />
+          <LocalImage path={sorterState.currentFile?.originalPath} className={cls("image")} />
         )}
       </div>
       <div className={cls("directories-container")}></div>
